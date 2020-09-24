@@ -12,6 +12,6 @@ internal class GildedRoseTest {
 
         app.updateQuality()
 
-        assertEquals("fixme", app.items[0].name)
+        assertEquals("foo", app.items[0].name)
     }
 }
