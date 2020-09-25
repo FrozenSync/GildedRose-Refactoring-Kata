@@ -8,34 +8,46 @@ class GildedRose(var items: Array<Item>) {
 
     fun updateQuality() {
         for (item in items) {
-            if (item.name == SULFURAS) {
-                continue
-            }
-
-            when (item.name) {
-                AGED_BRIE -> if (item.quality < 50) item.quality += 1
-                BACKSTAGE_PASSES -> {
-                    if (item.quality < 50) item.quality += 1
-
-                    if (item.sellIn < 11) {
-                        if (item.quality < 50) item.quality += 1
-                    }
-                    if (item.sellIn < 6) {
-                        if (item.quality < 50) item.quality += 1
-                    }
-                }
-                else -> if (item.quality > 0) item.quality -= 1
-            }
-
-            item.sellIn = item.sellIn - 1
-
-            if (item.sellIn < 0) {
-                when (item.name) {
-                    AGED_BRIE -> if (item.quality < 50) item.quality += 1
-                    BACKSTAGE_PASSES -> item.quality = 0
-                    else -> if (item.quality > 0) item.quality -= 1
-                }
-            }
+            item.updateQuality()
         }
     }
+}
+
+private fun Item.updateQuality() {
+    if (isConstant()) return
+
+    when (name) {
+        AGED_BRIE -> incrementQuality()
+        BACKSTAGE_PASSES -> {
+            incrementQuality()
+
+            if (sellIn < 11) {
+                incrementQuality()
+            }
+            if (sellIn < 6) {
+                incrementQuality()
+            }
+        }
+        else -> decrementQuality()
+    }
+
+    sellIn = sellIn - 1
+
+    if (sellIn < 0) {
+        when (name) {
+            AGED_BRIE -> incrementQuality()
+            BACKSTAGE_PASSES -> quality = 0
+            else -> decrementQuality()
+        }
+    }
+}
+
+private fun Item.isConstant() = name == SULFURAS
+
+private fun Item.incrementQuality(increment: Int = 1) {
+    if (quality < 50) quality += increment
+}
+
+private fun Item.decrementQuality(decrement: Int = 1) {
+    if (quality > 0) quality -= decrement
 }
