@@ -31,7 +31,7 @@ private fun Item.updateQuality() {
         else -> decrementQuality()
     }
 
-    sellIn = sellIn - 1
+    sellIn -= 1
 
     if (sellIn < 0) {
         when (name) {
