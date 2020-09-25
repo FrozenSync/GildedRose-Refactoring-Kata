@@ -77,6 +77,18 @@ internal class GildedRoseTest {
     }
 
     @Test
+    fun `Quality of "Aged Brie" never decreases`() {
+        val items = arrayOf(Item("Aged Brie", -6, 50))
+        val subject = GildedRose(items)
+
+        subject.updateQuality()
+        val result = subject.items[0]
+
+        assertEquals(-7, result.sellIn)
+        assertEquals(50, result.quality)
+    }
+
+    @Test
     fun `Quality of "Backstage passes" increases the older it gets`() {
         val items = arrayOf(Item("Backstage passes to a TAFKAL80ETC concert", 66, 0))
         val subject = GildedRose(items)
