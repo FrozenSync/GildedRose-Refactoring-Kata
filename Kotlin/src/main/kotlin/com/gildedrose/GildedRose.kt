@@ -42,5 +42,6 @@ private fun Item.incrementQuality(increment: Int = 1) {
 }
 
 private fun Item.decrementQuality(decrement: Int = 1) {
-    if (quality > 0) quality -= decrement
+    val result = quality - decrement
+    quality = if (result < 0) 0 else result
 }

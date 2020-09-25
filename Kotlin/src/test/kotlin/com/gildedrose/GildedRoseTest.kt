@@ -42,14 +42,20 @@ internal class GildedRoseTest {
 
     @Test
     fun `Quality of an item is never negative`() {
-        val items = arrayOf(Item("foo", 0, 0))
+        val items = arrayOf(
+                Item("foo", 0, 0),
+                Item("foo", 0, 1)
+        )
         val subject = GildedRose(items)
 
         subject.updateQuality()
-        val result = subject.items[0]
+        val result = subject.items
 
-        assertEquals(-1, result.sellIn)
-        assertEquals(0, result.quality)
+        assertEquals(-1, result[0].sellIn)
+        assertEquals(0, result[0].quality)
+
+        assertEquals(-1, result[1].sellIn)
+        assertEquals(0, result[1].quality)
     }
 
     @Test
