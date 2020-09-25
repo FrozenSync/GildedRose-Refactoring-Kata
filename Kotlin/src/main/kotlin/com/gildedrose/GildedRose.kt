@@ -19,13 +19,10 @@ private fun Item.updateQuality() {
     when (name) {
         AGED_BRIE -> incrementQuality()
         BACKSTAGE_PASSES -> {
-            incrementQuality()
-
-            if (sellIn < 11) {
-                incrementQuality()
-            }
-            if (sellIn < 6) {
-                incrementQuality()
+            when {
+                sellIn < 6 -> incrementQuality(increment = 3)
+                sellIn < 11 -> incrementQuality(increment = 2)
+                else -> incrementQuality()
             }
         }
         else -> decrementQuality()
@@ -45,7 +42,8 @@ private fun Item.updateQuality() {
 private fun Item.isConstant() = name == SULFURAS
 
 private fun Item.incrementQuality(increment: Int = 1) {
-    if (quality < 50) quality += increment
+    val result = quality + increment
+    quality = if (result > 50)  50 else result
 }
 
 private fun Item.decrementQuality(decrement: Int = 1) {
