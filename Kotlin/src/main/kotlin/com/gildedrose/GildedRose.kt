@@ -1,16 +1,20 @@
 package com.gildedrose
 
+const val SULFURAS = "Sulfuras, Hand of Ragnaros"
+const val AGED_BRIE = "Aged Brie"
+const val BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert"
+
 class GildedRose(var items: Array<Item>) {
 
     fun updateQuality() {
         for (item in items) {
-            if (item.name == "Sulfuras, Hand of Ragnaros") {
+            if (item.name == SULFURAS) {
                 continue
             }
 
             when (item.name) {
-                "Aged Brie" -> if (item.quality < 50) item.quality += 1
-                "Backstage passes to a TAFKAL80ETC concert" -> {
+                AGED_BRIE -> if (item.quality < 50) item.quality += 1
+                BACKSTAGE_PASSES -> {
                     if (item.quality < 50) item.quality += 1
 
                     if (item.sellIn < 11) {
@@ -27,8 +31,8 @@ class GildedRose(var items: Array<Item>) {
 
             if (item.sellIn < 0) {
                 when (item.name) {
-                    "Aged Brie" -> if (item.quality < 50) item.quality += 1
-                    "Backstage passes to a TAFKAL80ETC concert" -> item.quality = 0
+                    AGED_BRIE -> if (item.quality < 50) item.quality += 1
+                    BACKSTAGE_PASSES -> item.quality = 0
                     else -> if (item.quality > 0) item.quality -= 1
                 }
             }
