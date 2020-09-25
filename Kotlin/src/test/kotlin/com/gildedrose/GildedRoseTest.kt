@@ -161,8 +161,26 @@ internal class GildedRoseTest {
 
         subject.updateQuality()
         val result = subject.items[0]
-        
+
         assertEquals(666, result.sellIn)
         assertEquals(80, result.quality)
+    }
+
+    @Test
+    fun `Quality of "Conjured" items degrade twice as fast as normal items`() {
+        val items = arrayOf(
+                Item("Conjured Mana Cake", 6, 80),
+                Item("Conjured Mana Cake", 0, 80)
+        )
+        val subject = GildedRose(items)
+
+        subject.updateQuality()
+        val result = subject.items
+
+        assertEquals(5, result[0].sellIn)
+        assertEquals(78, result[0].quality)
+
+        assertEquals(-1, result[1].sellIn)
+        assertEquals(76, result[1].quality)
     }
 }

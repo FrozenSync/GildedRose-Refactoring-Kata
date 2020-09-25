@@ -3,6 +3,7 @@ package com.gildedrose
 const val SULFURAS = "Sulfuras, Hand of Ragnaros"
 const val AGED_BRIE = "Aged Brie"
 const val BACKSTAGE_PASSES = "Backstage passes to a TAFKAL80ETC concert"
+const val CONJURED = "Conjured Mana Cake"
 
 class GildedRose(var items: Array<Item>) {
 
@@ -25,6 +26,7 @@ private fun Item.updateQuality() {
                 else -> incrementQuality()
             }
         }
+        CONJURED -> decrementQuality(decrement = 2)
         else -> decrementQuality()
     }
 
@@ -34,6 +36,7 @@ private fun Item.updateQuality() {
         when (name) {
             AGED_BRIE -> incrementQuality()
             BACKSTAGE_PASSES -> quality = 0
+            CONJURED -> decrementQuality(decrement = 2)
             else -> decrementQuality()
         }
     }
