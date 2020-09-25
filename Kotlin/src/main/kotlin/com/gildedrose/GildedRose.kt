@@ -18,28 +18,20 @@ private fun Item.updateQuality() {
     if (isConstant()) return
 
     when (name) {
-        AGED_BRIE -> incrementQuality()
+        AGED_BRIE -> if (sellIn <= 0) incrementQuality(increment = 2) else incrementQuality()
         BACKSTAGE_PASSES -> {
             when {
+                sellIn <= 0 -> quality = 0
                 sellIn < 6 -> incrementQuality(increment = 3)
                 sellIn < 11 -> incrementQuality(increment = 2)
                 else -> incrementQuality()
             }
         }
-        CONJURED -> decrementQuality(decrement = 2)
-        else -> decrementQuality()
+        CONJURED -> if (sellIn <= 0) decrementQuality(decrement = 4) else decrementQuality(decrement = 2)
+        else -> if (sellIn <= 0) decrementQuality(decrement = 2) else decrementQuality()
     }
 
     sellIn -= 1
-
-    if (sellIn < 0) {
-        when (name) {
-            AGED_BRIE -> incrementQuality()
-            BACKSTAGE_PASSES -> quality = 0
-            CONJURED -> decrementQuality(decrement = 2)
-            else -> decrementQuality()
-        }
-    }
 }
 
 private fun Item.isConstant() = name == SULFURAS
